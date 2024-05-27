@@ -1723,7 +1723,35 @@ class flxfn extends ObjectModel
           echo "<br> Se borraron correctamente los atributos y stocks de más <br>";  
         }
         
-      }
-    
+    }
+    public static function deleteFromFlxClient($idClientPresta, $idClientErp){
+        
+        echo '<br> <b>Cliente con error</b> <br>';
+        echo '>> id_presta: ' . $idClientPresta . ' -> id_erp: ' . $idClientErp . '<br>';
+        
+        echo '--------------------------------------------------------------------------- <br>';
+        echo ' Se eliminará la relación <br>';
+        echo ' El cliente ya no posee el mismo ID_ERP. Es necesario eliminar la relación.  <br>';
+        echo '--------------------------------------------------------------------------- <br>';
+        
+        flxfn::startTransaction();
+
+        $sql = 'DELETE FROM '._DB_PREFIX_.'flx_cliente
+        WHERE id_prestashop = ' . $idClientPresta;
+        
+        $result = Db::getInstance()->execute($sql);
+
+        if ($result) {
+            echo '...<br>';
+            echo '...Cliente eliminado <br>';
+        } else {
+            echo '...<br>';
+            echo '...Ocurrio un error<br>';
+        }
+
+        flxfn::commitTransaction(0);
+
+        return $result;
+    }
 }
 ?>

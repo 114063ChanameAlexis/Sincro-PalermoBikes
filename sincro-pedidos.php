@@ -723,6 +723,14 @@ $data['mensaje']['Clientes con Error'] = $errMensaje;
 
       }catch (Exception $e){
 
+
+        if(strpos($e->getMessage(), 'El cliente del pedido no existe en Flexxus')){
+            $success = flxfn::deleteFromFlxClient($pedido['CodigoCliente'], $codigoCliente);
+            
+            echo "<br>Se borro existosamente el cliente";
+        }
+
+
             $message = $e->getMessage().' Linea error ('.$e->getLine().')';
             flxfn::addLog('Insertar Pedido', $message);
 
